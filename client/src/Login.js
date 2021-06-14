@@ -9,16 +9,13 @@ import {
   FormControl,
   TextField,
   Paper,
-  Link,
-  Avatar,
-  Checkbox,
-  FormControlLabel,
-
+  Hidden,
 } from "@material-ui/core";
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { login } from "./store/utils/thunkCreators";
+import bgImage from './bg-img.png';
+import logo from './bubble.svg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,15 +40,42 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
+    padding: '2rem',
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    padding: '0.8rem 3.5rem',
+    backgroundColor: '#3A8DFF',
+    color: '#fff',
   },
+  accountType: {
+    display: 'flex',
+    justifyContent: 'right',
+    alignItems: 'center',
+  },
+  accountBtn: {
+    backgroundColor: '#fff',
+    color: '#3A8DFF',
+    textTransform: 'capitalize',
+    boxShadow: '0 5px 8px 0 rgba(0, 0, 0, 0.3)',
+    marginLeft: '1rem',
+  },
+  heroText: {
+    fontSize: '2rem',
+    width: '75%',
+    margin: 'auto',
+    color: '#fff',
+  },
+  imgLogo: {
+    marginBottom: '2rem',
+  },
+  smallLogo: {
+    backgroundColor: '#3A8DFF',
+    borderRadius: '50%'
+  }
 }));
 
 const Login = (props) => {
@@ -75,18 +99,38 @@ const Login = (props) => {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
+      <Grid item xs={false} sm={5} className={classes.image}>
+        <Hidden only="xs">
+          <Typography align="center" variant="h2" className={classes.heroText}>
+            <img src={logo} alt="Logo" /><br/><br />
+            Converse with anyone with any language
           </Typography>
+        </Hidden>
+      </Grid>
+      <Grid item xs={12} sm={7} component={Paper} elevation={6} square>
+        <Box p={3} className={classes.accountType}>
+          <Typography color="textSecondary" variant="body1">
+            Don’t have an account?
+          </Typography>
+          <Button className={classes.accountBtn}>
+            Create account
+          </Button>
+        </Box>
+        <div className={classes.paper}>
+          <Hidden smUp>
+            <Box p={1} className={classes.smallLogo}>
+              <img src={logo} alt="Logo" width="50" height="50" />
+            </Box>
+            <Typography align="center" color="primary" variant="h5">
+              Converse with anyone with any language
+            </Typography>
+          </Hidden>
           <form className={classes.form} noValidate>
+            <Box>
+              <Typography align="left" variant="h6">Welcome back!</Typography>
+            </Box>
+
             <TextField
-              variant="outlined"
               margin="normal"
               required
               fullWidth
@@ -97,7 +141,6 @@ const Login = (props) => {
               autoFocus
             />
             <TextField
-              variant="outlined"
               margin="normal"
               required
               fullWidth
@@ -107,31 +150,15 @@ const Login = (props) => {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
+            <Box mt={3} align="center">
+              <Button
+                type="submit"
+                variant="contained"
+                className={classes.submit}
+              >
+                Login
+              </Button>
+            </Box>
           </form>
         </div>
       </Grid>
