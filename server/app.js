@@ -1,3 +1,4 @@
+require('dotenv').config()
 const createError = require("http-errors");
 const express = require("express");
 const { join } = require("path");
@@ -7,6 +8,7 @@ const session = require("express-session");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const db = require("./db");
 const { User } = require("./db/models");
+
 // create store for sessions to persist in database
 const sessionStore = new SequelizeStore({ db });
 
@@ -20,7 +22,7 @@ app.use(urlencoded({ extended: false }));
 app.use(express.static(join(__dirname, "public")));
 
 app.use(function (req, res, next) {
-  const token = req.headers["x-access-token"];
+  const token = req.cookies?.token || req.headers["x-access-token"]; // where a client isn't a browser
   if (token) {
     jwt.verify(token, process.env.SESSION_SECRET, (err, decoded) => {
       if (err) {
