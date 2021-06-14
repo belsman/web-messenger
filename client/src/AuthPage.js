@@ -1,6 +1,5 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { connect } from "react-redux";
 import {
   Grid,
   Box,
@@ -41,7 +40,8 @@ const useStyles = makeStyles((theme) => ({
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
-    padding: '2rem',
+    paddingLeft: '2rem',
+    paddingRight: '2rem',
   },
   submit: {
     padding: '0.8rem 3.5rem',
@@ -108,7 +108,7 @@ const AuthPage = (props) => {
               Converse with anyone with any language
             </Typography>
           </Hidden>
-          <form className={classes.form} noValidate>
+          <form onSubmit={props.onSubmitHandler} className={classes.form} noValidate>
             <Box>
               <Typography align="left" variant="h6">{props.formHeader}</Typography>
             </Box>

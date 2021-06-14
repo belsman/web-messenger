@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { TextField } from "@material-ui/core";
+import { TextField, FormHelperText } from "@material-ui/core";
 import { register } from "./store/utils/thunkCreators";
-import AuthPage from "./Authentication";
+import AuthPage from "./AuthPage";
 
-const Login = (props) => {
-  const history = useHistory();
+const Signup = (props) => {
   const { user, register } = props;
   const [formErrorMessage, setFormErrorMessage] = useState({});
 
@@ -19,6 +18,7 @@ const Login = (props) => {
 
     if (password !== confirmPassword) {
       setFormErrorMessage({ confirmPassword: "Passwords must match" });
+      console.log("wrong password");
       return;
     }
 
@@ -50,7 +50,6 @@ const Login = (props) => {
         label="Email Address"
         name="email"
         autoComplete="email"
-        autoFocus
       />
 
       <TextField
@@ -63,6 +62,20 @@ const Login = (props) => {
         id="password"
         autoComplete="current-password"
       />
+
+      <TextField
+        label="Confirm Password"
+        aria-label="confirm password"
+        type="password"
+        inputProps={{ minLength: 6 }}
+        name="confirmPassword"
+        fullWidth
+        required
+      />
+
+      <FormHelperText>
+        {formErrorMessage.confirmPassword}
+      </FormHelperText>
     </>
   );
 
@@ -73,6 +86,7 @@ const Login = (props) => {
       alternateUrl="/login"
       formHeader="Create an account."
       submitText="Create"
+      onSubmitHandler={handleRegister}
     >
       <FormFields />
     </AuthPage>
@@ -93,4 +107,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);

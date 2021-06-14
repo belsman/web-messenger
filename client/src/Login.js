@@ -2,17 +2,16 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { TextField } from "@material-ui/core";
-import AuthPage from "./Authentication";
+import AuthPage from "./AuthPage";
 import { login } from "./store/utils/thunkCreators";
 
 const Login = (props) => {
   const { user, login } = props;
-
+  
   const handleLogin = async (event) => {
     event.preventDefault();
     const username = event.target.username.value;
     const password = event.target.password.value;
-
     await login({ username, password });
   };
 
@@ -53,6 +52,7 @@ const Login = (props) => {
       alternateUrl="/register"
       formHeader="Welcome back!"
       submitText="Login"
+      onSubmitHandler={handleLogin}
     >
       <FormFields />
     </AuthPage>
