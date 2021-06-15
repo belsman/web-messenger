@@ -2,12 +2,24 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { TextField } from "@material-ui/core";
+import { makeStyles } from '@material-ui/styles';
 import AuthPage from "./AuthPage";
 import { login } from "./store/utils/thunkCreators";
 
+const useStyles = makeStyles((theme) => ({
+  textField: {
+    marginTop: 40,
+  },
+  mb: {
+    marginBottom: 20,
+  },
+}));
+
 const Login = (props) => {
   const { user, login } = props;
-  
+
+  const classes = useStyles();
+
   const handleLogin = async (event) => {
     event.preventDefault();
     const username = event.target.username.value;
@@ -30,6 +42,7 @@ const Login = (props) => {
         name="username"
         autoComplete="username"
         autoFocus
+        className={classes.textField}
       />
 
       <TextField
@@ -41,6 +54,7 @@ const Login = (props) => {
         type="password"
         id="password"
         autoComplete="current-password"
+        className={classes.mb}
       />
     </>
   );

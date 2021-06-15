@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
   image: {
     background: '#3A8DFF',
+    margin: theme.spacing(0),
     backgroundImage: `linear-gradient(to bottom, rgba(58,141,255, 0.85), rgba(134, 185, 255)), url(${bgImage})`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
@@ -40,14 +41,15 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(0),
     paddingLeft: '2rem',
     paddingRight: '2rem',
   },
   submit: {
-    padding: '0.8rem 3.5rem',
+    padding: '0.8rem 3.3rem',
     backgroundColor: '#3A8DFF',
     color: '#fff',
+    marginTop: '0.5rem',
   },
   accountType: {
     display: 'flex',
@@ -64,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
     height: 50,
   },
   heroText: {
-    fontSize: '2rem',
+    fontSize: '1.5rem',
     width: '75%',
     margin: 'auto',
     color: '#fff',
@@ -78,16 +80,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#3A8DFF',
     borderRadius: '50%'
   },
-  bgCaption: {
-    position: 'relative',
-    top: '-7%',
-    "@media (max-width: 760px)": {
-      display: 'none',
-      position: 'absolute',
-      top: '-30%'
-    }
-  }
-
 }));
 
 const AuthPage = (props) => {
@@ -127,7 +119,7 @@ const AuthPage = (props) => {
               <Typography align="left" variant="h6">{props.formHeader}</Typography>
             </Box>
             {props.children}
-            <Box mt={3} align="center">
+            <Box align="center">
               <Button
                 type="submit"
                 variant="contained"
