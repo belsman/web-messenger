@@ -9,7 +9,6 @@ import {
   Hidden,
 } from "@material-ui/core";
 import { makeStyles } from '@material-ui/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import bgImage from './bg-img.png';
 import logo from './bubble.svg';
 
@@ -17,9 +16,11 @@ const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
   },
+  main: {
+    overflow: 'hidden',
+  },
   image: {
     background: '#3A8DFF',
-    backgroundImage: `url(${bgImage})`,
     backgroundImage: `linear-gradient(to bottom, rgba(58,141,255, 0.85), rgba(134, 185, 255)), url(${bgImage})`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
@@ -50,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
   accountType: {
     display: 'flex',
-    justifyContent: 'right',
+    justifyContent: 'flex-end',
     alignItems: 'center',
   },
   accountBtn: {
@@ -59,6 +60,8 @@ const useStyles = makeStyles((theme) => ({
     textTransform: 'capitalize',
     boxShadow: '0 5px 8px 0 rgba(0, 0, 0, 0.3)',
     marginLeft: '1rem',
+    width:  150,
+    height: 50,
   },
   heroText: {
     fontSize: '2rem',
@@ -67,12 +70,24 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
   },
   imgLogo: {
-    marginBottom: '2rem',
+    display: 'flex',
+    justifyContent: 'center',
   },
+  
   smallLogo: {
     backgroundColor: '#3A8DFF',
     borderRadius: '50%'
+  },
+  bgCaption: {
+    position: 'relative',
+    top: '-7%',
+    "@media (max-width: 760px)": {
+      display: 'none',
+      position: 'absolute',
+      top: '-30%'
+    }
   }
+
 }));
 
 const AuthPage = (props) => {
@@ -81,17 +96,16 @@ const AuthPage = (props) => {
 
   return (
     <Grid container component="main" className={classes.root}>
-      <CssBaseline />
       <Grid item xs={false} sm={5} className={classes.image}>
         <Hidden only="xs">
           <Typography align="center" variant="h2" className={classes.heroText}>
             <img src={logo} alt="Logo" /><br/><br />
-            Converse with anyone with any language
+             Converse with anyone with any language
           </Typography>
         </Hidden>
       </Grid>
       <Grid item xs={12} sm={7} component={Paper} elevation={6} square>
-        <Box p={3} className={classes.accountType}>
+        <Box p={5} className={classes.accountType}>
           <Typography color="textSecondary" variant="body1">
             {props.promptText}
           </Typography>
