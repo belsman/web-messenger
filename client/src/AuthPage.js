@@ -78,16 +78,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#3A8DFF',
     borderRadius: '50%'
   },
-  bgCaption: {
-    position: 'relative',
-    top: '-7%',
-    "@media (max-width: 760px)": {
-      display: 'none',
-      position: 'absolute',
-      top: '-30%'
-    }
-  }
-
 }));
 
 const AuthPage = (props) => {
