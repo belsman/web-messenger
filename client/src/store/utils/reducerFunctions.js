@@ -14,9 +14,11 @@ export const addMessageToStore = (state, payload) => {
   return state.map((convo) => {
     if (convo.id === message.conversationId) {
       const convoCopy = { ...convo };
-      convoCopy.messages.push(message);
-      convoCopy.latestMessageText = message.text;
-
+      const duplicate = convoCopy.messages.find(msg => msg.id === message.id);
+      if (!duplicate) {
+        convoCopy.messages.push(message);
+        convoCopy.latestMessageText = message.text;
+      }
       return convoCopy;
     } else {
       return convo;
