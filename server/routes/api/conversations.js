@@ -72,7 +72,7 @@ router.get("/", async (req, res, next) => {
       const lastMessageIndex = convoJSON.messages.length - 1;
       if (lastMessageIndex > -1) {
         convoJSON.latestMessageText = convoJSON.messages[lastMessageIndex].text;
-        convoJSON.notificationCount = convoJSON.messages.filter(
+        convoJSON.notificationCount = convo.messages.filter(
           message => ((message.senderId !== userId) && (message.readStatus === false))
         ).length;
       }

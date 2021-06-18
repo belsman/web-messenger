@@ -46,11 +46,18 @@ router.post("/update-message-readstatus", async (req, res, next) => {
       return res.sendStatus(401);
     }
 
-    const { messages } = req.body;
+    const { ids } = req.body;
 
     // TODO: UPDATE MESSAGES contained in the array!
+    const messages = await Message.findAll({ where: { id: ids } });
 
-    res.json({ message: "success!" });
+    for (let i = 0; i < messages.length; i++) {
+      const message = messages[i];
+      message.readStatus = true;
+      await message.save();
+    }
+
+    res.json({ message: "updated successfully" });
   } catch (error) {
     next(error);
   }
