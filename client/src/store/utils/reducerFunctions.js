@@ -1,8 +1,19 @@
+export const setNotification = (state, payload) => {
+  return state.map(convo => {
+    if (convo.id === payload) {
+      const { notificationCount } = convo;
+      const convoCopy = { ...convo, notificationCount: notificationCount + 1 };
+      return convoCopy;
+    } else {
+      return convo;
+    }
+  });
+}
+
 export const resolveNotification = (state, payload) => {
   return state.map(convo => {
     if (convo.id === payload) {
-      const convoCopy = { ...convo }
-      convoCopy.notificationCount = 0;
+      const convoCopy = { ...convo, notificationCount: 0 }
       return convoCopy;
     } else {
       return convo;
