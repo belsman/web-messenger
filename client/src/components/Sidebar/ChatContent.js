@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,8 +16,8 @@ const useStyles = makeStyles((theme) => ({
   },
   previewText: {
     fontSize: 12,
-    color: "#9CADC8",
     letterSpacing: -0.17,
+    color: ({count}) => count > 0 ? "#000" : "#9CADC8",
   },
   notification: {
     height: 20,
@@ -35,10 +36,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ChatContent = (props) => {
-  const { conversation } = props;
+  const { conversation, activeConversation } = props;
   const { latestMessageText, otherUser } = conversation;
 
-  const unReadCount = 30;
+  const unReadCount = 11;
+  const isActiveConversation = otherUser.username === activeConversation;
 
   const styleProps = {
     count: unReadCount,
@@ -55,9 +57,15 @@ const ChatContent = (props) => {
           {latestMessageText}
         </Typography>
       </Box>
-      <Box className={classes.notification}>{unReadCount}</Box>
+      {(unReadCount > 0 && !isActiveConversation) && <Box className={classes.notification}>{unReadCount}</Box>}
     </Box>
   );
 };
 
-export default ChatContent;
+const mapStateToProps = (state) => {
+  return {
+    activeConversation: state.activeConversation,
+  };
+};
+
+export default connect(mapStateToProps)(ChatContent);
