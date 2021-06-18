@@ -15,8 +15,15 @@ const REMOVE_OFFLINE_USER = "REMOVE_OFFLINE_USER";
 const SET_SEARCHED_USERS = "SET_SEARCHED_USERS";
 const CLEAR_SEARCHED_USERS = "CLEAR_SEARCHED_USERS";
 const ADD_CONVERSATION = "ADD_CONVERSATION";
-
+const SET_NOTIFICATION_TO_ZERO = "SET_NOTIFICATION_TO_ZERO";
 // ACTION CREATORS
+
+export const setNotificationToZero = (conversationId) => {
+  return {
+    type: SET_NOTIFICATION_TO_ZERO,
+    payload: conversationId
+  };
+};
 
 export const gotConversations = (conversations) => {
   return {

@@ -3,6 +3,8 @@ import { Box } from "@material-ui/core";
 import { BadgeAvatar, ChatContent } from "../Sidebar";
 import { withStyles } from "@material-ui/core/styles";
 import { setActiveChat } from "../../store/activeConversation";
+import { setNotificationToZero } from "../../store/conversations";
+
 import { connect } from "react-redux";
 
 const styles = {
@@ -22,11 +24,18 @@ const styles = {
 class Chat extends Component {
   handleClick = async (conversation) => {
     await this.props.setActiveChat(conversation.otherUser.username);
+    this.props.setNotificationToZero(conversation.id);
   };
 
   render() {
     const { classes } = this.props;
     const otherUser = this.props.conversation.otherUser;
+
+    console.log(`**** Let's view this conversation ****`);
+    console.log('');
+    console.log(this.props.conversation);
+    console.log(`**********************`);
+    console.log('\n');
     return (
       <Box
         onClick={() => this.handleClick(this.props.conversation)}
@@ -49,6 +58,9 @@ const mapDispatchToProps = (dispatch) => {
     setActiveChat: (id) => {
       dispatch(setActiveChat(id));
     },
+    setNotificationToZero: (id) => {
+      dispatch(setNotificationToZero(id));
+    }
   };
 };
 

@@ -39,7 +39,7 @@ const ChatContent = (props) => {
   const { conversation, activeConversation } = props;
   const { latestMessageText, otherUser } = conversation;
 
-  const unReadCount = 11;
+  const unReadCount = conversation.notificationCount;
   const isActiveConversation = otherUser.username === activeConversation;
 
   const styleProps = {
