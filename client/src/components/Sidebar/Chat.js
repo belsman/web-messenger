@@ -4,7 +4,7 @@ import { BadgeAvatar, ChatContent } from "../Sidebar";
 import { withStyles } from "@material-ui/core/styles";
 import { setActiveChat } from "../../store/activeConversation";
 import { setNotificationToZero } from "../../store/conversations";
-
+import axios from "axios";
 import { connect } from "react-redux";
 
 const styles = {
@@ -24,18 +24,29 @@ const styles = {
 class Chat extends Component {
   handleClick = async (conversation) => {
     await this.props.setActiveChat(conversation.otherUser.username);
+    this.updateReadStatus();
     this.props.setNotificationToZero(conversation.id);
+  };
+
+  updateReadStatus() {
+    const updateMessages = async (body) => {
+      await axios.post("/api/messages/update-message-readstatus", body);
+    }
+
+    const { messages, otherUser, notificationCount } = this.props.conversation;
+    const ids = messages.filter(
+      message => (message.readStatus === false) && (message.senderId === otherUser.id)
+      ).map(message => message.id);
+
+    if (notificationCount > 0) {
+      updateMessages({ ids });
+    }
   };
 
   render() {
     const { classes } = this.props;
     const otherUser = this.props.conversation.otherUser;
 
-    console.log(`**** Let's view this conversation ****`);
-    console.log('');
-    console.log(this.props.conversation);
-    console.log(`**********************`);
-    console.log('\n');
     return (
       <Box
         onClick={() => this.handleClick(this.props.conversation)}
