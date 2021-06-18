@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Box } from "@material-ui/core";
 import { BadgeAvatar, ChatContent } from "../Sidebar";
-import BadgeUnread from "./BadgeUnread";
 import { withStyles } from "@material-ui/core/styles";
 import { setActiveChat } from "../../store/activeConversation";
 import { connect } from "react-redux";
@@ -40,7 +39,6 @@ class Chat extends Component {
           sidebar={true}
         />
         <ChatContent conversation={this.props.conversation} />
-        <BadgeUnread count={11} />
       </Box>
     );
   }

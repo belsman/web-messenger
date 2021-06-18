@@ -20,9 +20,10 @@ const useStyles = makeStyles((theme) => ({
   },
   notification: {
     height: 20,
-    width: 20,
+    width: ({count}) => count < 10 ? 20 : 30,
     backgroundColor: "#3F92FF",
     marginRight: 10,
+    marginTop: 2,
     color: "white",
     fontSize: 10,
     letterSpacing: -0.5,
@@ -35,10 +36,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ChatContent = (props) => {
-  const classes = useStyles();
-
   const { conversation } = props;
   const { latestMessageText, otherUser } = conversation;
+
+  const styleProps = {
+    count: 12,
+  }
+  const classes = useStyles(styleProps);
 
   return (
     <Box className={classes.root}>
@@ -50,6 +54,7 @@ const ChatContent = (props) => {
           {latestMessageText}
         </Typography>
       </Box>
+      <Box className={classes.notification}>{12}</Box>
     </Box>
   );
 };
