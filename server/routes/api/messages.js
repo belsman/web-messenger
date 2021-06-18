@@ -3,6 +3,8 @@ const { Conversation, Message } = require("../../db/models");
 const onlineUsers = require("../../onlineUsers");
 
 // expects {recipientId, text, conversationId } in body (conversationId will be null if no conversation exists yet)
+
+
 router.post("/", async (req, res, next) => {
   try {
     if (!req.user) {
@@ -33,6 +35,22 @@ router.post("/", async (req, res, next) => {
       conversationId: conversation.id,
     });
     res.status(201).json({ message, sender });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/update-message-readstatus", async (req, res, next) => {
+  try {
+    if (!req.user) {
+      return res.sendStatus(401);
+    }
+
+    const { messages } = req.body;
+
+    // TODO: UPDATE MESSAGES contained in the array!
+
+    res.json({ message: "success!" });
   } catch (error) {
     next(error);
   }
