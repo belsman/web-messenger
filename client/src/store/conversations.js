@@ -4,6 +4,7 @@ import {
   addSearchedUsersToStore,
   removeOfflineUserFromStore,
   addMessageToStore,
+  resolveNotification,
 } from "./utils/reducerFunctions";
 
 // ACTIONS
@@ -98,6 +99,8 @@ const reducer = (state = [], action) => {
         action.payload.recipientId,
         action.payload.newMessage
       );
+    case SET_NOTIFICATION_TO_ZERO:
+      return resolveNotification(state, action.payload);
     default:
       return state;
   }

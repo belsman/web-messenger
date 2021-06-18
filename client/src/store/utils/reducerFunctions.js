@@ -1,3 +1,15 @@
+export const resolveNotification = (state, payload) => {
+  return state.map(convo => {
+    if (convo.id === payload) {
+      const convoCopy = { ...convo }
+      convoCopy.notificationCount = 0;
+      return convoCopy;
+    } else {
+      return convo;
+    }
+  });
+};
+
 export const addMessageToStore = (state, payload) => {
   const { message, sender } = payload;
   // if sender isn't null, that means the message needs to be put in a brand new convo
