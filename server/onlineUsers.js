@@ -14,7 +14,7 @@ const onlineUsersManager = {
     return this.isUserOffline(userId) && this.onlineUsers.push({ userId, socketId });
   },
   removeUser(userId) {
-    if (isUserOnline(userId)) {
+    if (this.isUserOnline(userId)) {
       const userIndex = this.onlineUsers.findIndex(user => user.userId === userId);
       this.onlineUsers.splice(userIndex, 1);
       return true;

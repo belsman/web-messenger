@@ -6,16 +6,20 @@ import {
   addOnlineUser,
 } from "./store/conversations";
 
-const socket = io(window.location.origin);
+const socket = io(window.location.origin, {
+  autoConnect: false,
+});
 
 socket.on("connect_error", (err) => {
-  if (err) {
-    console.log(err.message);
-  }
+  console.log(err);
 });
 
 socket.on("connect", () => {
   console.log("connected to server");
+
+  socket.on("show-auth-value", (msg) => {
+    console.log(`I yearn to see this message: ${msg}`);
+  });
 
   socket.on("add-online-user", (id) => {
     store.dispatch(addOnlineUser(id));
@@ -27,10 +31,16 @@ socket.on("connect", () => {
   socket.on("new-message", (data) => {
     store.dispatch(setNewMessage(data.message, data.sender));
   });
+
+  socket.on("disconnect", (data) => {
+    console.log("Socket closed! You are logged out");
+  });
 });
 
 socket.onAny((event, ...args) => {
-  console.log(event, args);
+  if (process.env.NODE_ENV === 'development') {
+    console.log(event, args);
+  }
 });
 
 export default socket;
