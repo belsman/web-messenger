@@ -34,7 +34,6 @@ socket.on("connect", () => {
 
     if (otherUser?.username === activeConversation) {
       socket.emit("mark-message-as-read", data.message.id);
-      console.log("emit a mark-as-read to mark this message")
     } else {
       store.dispatch(notifyUser(data.message.conversationId));
     }
