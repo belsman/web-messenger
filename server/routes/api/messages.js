@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { Conversation, Message } = require("../../db/models");
-const onlineManager = require("../../onlineUsers");
+const onlineManager = require("../../onlineManager");
 
 // expects {recipientId, text, conversationId } in body (conversationId will be null if no conversation exists yet)
 router.post("/", async (req, res, next) => {
