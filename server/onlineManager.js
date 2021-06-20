@@ -1,8 +1,8 @@
 const onlineUsersManager = {
-  onlineUsers: [],
+  onlineUsers: new Map(),
   getUser(userId) {
-    const user = this.onlineUsers.find(user => user.userId === userId);
-    return user?.socketId;
+    const user = this.onlineUsers[userId];
+    return user;
   },
   isUserOnline(userId) {
     return !!this.getUser(userId);
@@ -11,13 +11,14 @@ const onlineUsersManager = {
     return !this.isUserOnline(userId);
   },
   addUser(userId, socketId) {
-    return this.isUserOffline(userId) && this.onlineUsers.push({ userId, socketId });
+    if (this.isUserOffline(userId)) {
+      this.onlineUsers[userId] = socketId
+    }
+    return this.getUser(userId);
   },
   removeUser(userId) {
     if (this.isUserOnline(userId)) {
-      const userIndex = this.onlineUsers.findIndex(user => user.userId === userId);
-      this.onlineUsers.splice(userIndex, 1);
-      return true;
+      return delete this.onlineUsers[userId];
     }
     return false;
   }
