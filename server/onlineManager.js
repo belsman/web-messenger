@@ -1,7 +1,7 @@
 const onlineUsersManager = {
   onlineUsers: new Map(),
   getUser(userId) {
-    const user = this.onlineUsers[userId];
+    const user = this.onlineUsers.get(userId);
     return user;
   },
   isUserOnline(userId) {
@@ -12,15 +12,12 @@ const onlineUsersManager = {
   },
   addUser(userId, socketId) {
     if (this.isUserOffline(userId)) {
-      this.onlineUsers[userId] = socketId
+      this.onlineUsers.set(userId, socketId);
     }
-    return this.getUser(userId);
+    return true;
   },
   removeUser(userId) {
-    if (this.isUserOnline(userId)) {
-      return delete this.onlineUsers[userId];
-    }
-    return false;
+    return this.onlineUsers.delete(userId);
   }
 }
 

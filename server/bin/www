@@ -13,7 +13,7 @@ const http = require("http");
 const db = require("../db");
 const onlineManager = require("../onlineManager");
 const jwt = require("jsonwebtoken");
-const { getTokenFromCookie } = require("../utils");
+const cookie = require('cookie');
 
 /**
  * Get port from environment and store in Express.
@@ -34,8 +34,8 @@ const server = http.createServer(app);
 const io = require("socket.io")(server);
 
 io.use((socket, next) => {
-  const cookie = socket.request.headers.cookie;
-  const token = getTokenFromCookie(cookie);
+  const cookieObject = cookie.parse(socket.request.headers.cookie);
+  const token = cookieObject["token"];
   if (token) {
     try {
       const decoded = jwt.verify(token, process.env.SESSION_SECRET);
@@ -58,9 +58,9 @@ io.on("connection", (socket) => {
   });
 
   socket.on("new-message", ({ recipientId, message, sender }) => {
-    const to = onlineManager.getUser(recipientId);
-    if (to) {
-      socket.to(to).emit("new-message", {
+    const recipient = onlineManager.getUser(recipientId);
+    if (recipient) {
+      socket.to(recipient).emit("new-message", {
         message: message,
         sender: sender,
       });
