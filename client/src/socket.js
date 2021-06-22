@@ -20,10 +20,6 @@ socket.on("connect", () => {
     store.dispatch(removeOfflineUser(id));
   });
 
-  socket.on("read-the-message", data => {
-    console.log(data);
-  });
-
   socket.on("new-message", (data) => {
     store.dispatch(setNewMessage(data.message, data.sender));
     const { conversations, activeConversation } = store.getState();

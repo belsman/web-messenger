@@ -49,12 +49,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("mark-message-as-read", async (id) => {
-    const message = await Message.findOne({ where: { id: id } });
-    if (message) {
-      message.readStatus = true;
-      message.save();
-    }
-    socket.broadcast.emit("read-the-message", "message has been read!");
+    await Message.update({ readStatus: true }, { where: { id: id }});
   });
 
   socket.on("logout", (id) => {

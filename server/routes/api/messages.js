@@ -40,7 +40,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.post("/update-message-readstatus", async (req, res, next) => {
+router.put("/read", async (req, res, next) => {
   try {
     if (!req.user) {
       return res.sendStatus(401);
@@ -48,14 +48,12 @@ router.post("/update-message-readstatus", async (req, res, next) => {
 
     const { ids } = req.body;
 
-    // TODO: UPDATE MESSAGES contained in the array!
-    const messages = await Message.findAll({ where: { id: ids } });
-
-    for (let i = 0; i < messages.length; i++) {
-      const message = messages[i];
-      message.readStatus = true;
-      await message.save();
-    }
+    await Message.update(
+      { readStatus: true },
+      {
+        where: { id: ids }
+      }
+    );
 
     res.json({ message: "updated successfully" });
   } catch (error) {

@@ -14,6 +14,7 @@ function App() {
       try {
         const { data } = await axios.get('/csrf-token');
         axios.defaults.headers.post['X-CSRF-Token'] = data.csrfToken;
+        axios.defaults.headers.put['X-CSRF-Token'] = data.csrfToken;
         axios.defaults.headers.delete['X-CSRF-Token'] = data.csrfToken;
       } catch (error) {
         console.error(error);    
