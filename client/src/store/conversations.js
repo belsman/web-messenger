@@ -22,10 +22,10 @@ const SET_NOTIFICATION = "SET_NOTIFICATION";
 
 // ACTION CREATORS
 
-export const notifyUser = (conversationId) => {
+export const notifyUser = (payload) => {
   return {
     type: SET_NOTIFICATION,
-    payload: conversationId
+    payload
   };
 }
 

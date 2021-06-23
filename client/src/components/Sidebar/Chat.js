@@ -30,16 +30,13 @@ class Chat extends Component {
 
   updateReadStatus() {
     const updateMessages = async (body) => {
-      await axios.put("/api/messages/read", body);
+      await axios.put("/api/messages/status", body);
     }
 
-    const { messages, otherUser, notificationCount } = this.props.conversation;
-    const ids = messages.filter(
-      message => (message.readStatus === false) && (message.senderId === otherUser.id)
-      ).map(message => message.id);
+    const { unReadMessagesIds, notificationCount } = this.props.conversation;
 
     if (notificationCount > 0) {
-      updateMessages({ ids });
+      updateMessages({ ids: unReadMessagesIds });
     }
   };
 

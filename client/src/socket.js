@@ -31,7 +31,12 @@ socket.on("connect", () => {
     if (otherUser?.username === activeConversation) {
       socket.emit("mark-message-as-read", data.message.id);
     } else {
-      store.dispatch(notifyUser(data.message.conversationId));
+      store.dispatch(notifyUser(
+        {
+          convoId: data.message.conversationId,
+          messageId: data.message.id
+        }
+      ));
     }
   });
 });
