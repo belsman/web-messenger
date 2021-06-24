@@ -1,3 +1,29 @@
+export const setNotification = (state, payload) => {
+  return state.map(convo => {
+    if (convo.id === payload.convoId) {
+      const { notificationCount, unReadMessagesIds } = convo;
+      const convoCopy = { ...convo, 
+        notificationCount: notificationCount + 1,
+        unReadMessagesIds: [ ...unReadMessagesIds, payload.messageId ],
+      };
+      return convoCopy;
+    } else {
+      return convo;
+    }
+  });
+}
+
+export const resolveNotification = (state, payload) => {
+  return state.map(convo => {
+    if (convo.id === payload) {
+      const convoCopy = { ...convo, notificationCount: 0, unReadMessagesIds: [] }
+      return convoCopy;
+    } else {
+      return convo;
+    }
+  });
+};
+
 export const addMessageToStore = (state, payload) => {
   const { message, sender } = payload;
   // if sender isn't null, that means the message needs to be put in a brand new convo

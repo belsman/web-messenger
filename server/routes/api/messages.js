@@ -3,6 +3,8 @@ const { Conversation, Message } = require("../../db/models");
 const onlineManager = require("../../onlineManager");
 
 // expects {recipientId, text, conversationId } in body (conversationId will be null if no conversation exists yet)
+
+
 router.post("/", async (req, res, next) => {
   try {
     if (!req.user) {
@@ -33,6 +35,27 @@ router.post("/", async (req, res, next) => {
       conversationId: conversation.id,
     });
     res.status(201).json({ message, sender });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/status", async (req, res, next) => {
+  try {
+    if (!req.user) {
+      return res.sendStatus(401);
+    }
+
+    const { ids } = req.body;
+
+    await Message.update(
+      { readStatus: true },
+      {
+        where: { id: ids }
+      }
+    );
+
+    res.json({ message: "updated successfully" });
   } catch (error) {
     next(error);
   }

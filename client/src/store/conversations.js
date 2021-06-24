@@ -4,6 +4,8 @@ import {
   addSearchedUsersToStore,
   removeOfflineUserFromStore,
   addMessageToStore,
+  resolveNotification,
+  setNotification,
 } from "./utils/reducerFunctions";
 
 // ACTIONS
@@ -15,8 +17,24 @@ const REMOVE_OFFLINE_USER = "REMOVE_OFFLINE_USER";
 const SET_SEARCHED_USERS = "SET_SEARCHED_USERS";
 const CLEAR_SEARCHED_USERS = "CLEAR_SEARCHED_USERS";
 const ADD_CONVERSATION = "ADD_CONVERSATION";
+const SET_NOTIFICATION_TO_ZERO = "SET_NOTIFICATION_TO_ZERO";
+const SET_NOTIFICATION = "SET_NOTIFICATION";
 
 // ACTION CREATORS
+
+export const notifyUser = (payload) => {
+  return {
+    type: SET_NOTIFICATION,
+    payload
+  };
+}
+
+export const setNotificationToZero = (conversationId) => {
+  return {
+    type: SET_NOTIFICATION_TO_ZERO,
+    payload: conversationId
+  };
+};
 
 export const gotConversations = (conversations) => {
   return {
@@ -91,6 +109,10 @@ const reducer = (state = [], action) => {
         action.payload.recipientId,
         action.payload.newMessage
       );
+    case SET_NOTIFICATION_TO_ZERO:
+      return resolveNotification(state, action.payload);
+    case SET_NOTIFICATION:
+      return setNotification(state, action.payload);
     default:
       return state;
   }
