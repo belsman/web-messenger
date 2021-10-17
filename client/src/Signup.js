@@ -18,7 +18,6 @@ const Signup = (props) => {
 
     if (password !== confirmPassword) {
       setFormErrorMessage({ confirmPassword: "Passwords must match" });
-      console.log("wrong password");
       return;
     }
 
